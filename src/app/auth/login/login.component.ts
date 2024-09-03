@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/auth/login.service';
 import { LoginRequest } from 'src/app/services/auth/loginRequest';
@@ -10,48 +10,53 @@ import { LoginRequest } from 'src/app/services/auth/loginRequest';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginError:string="";
-  loginForm=this.formBuilder.group({
-    email:['iva@gmail.com',[Validators.required,Validators.email]],
-    password: ['',Validators.required],
-  })
-  constructor(private formBuilder:FormBuilder, private router:Router, private loginService: LoginService) { }
+  loginError: string = "";
+  loginForm: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder, 
+    private router: Router, 
+    private loginService: LoginService
+  ) { 
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required], // Ya no hay validación de email
+      password: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
+    // Puedes poner lógica de inicialización adicional aquí si es necesario
   }
 
-  get email(){
-    return this.loginForm.controls.email;
+  get username() {
+    return this.loginForm.get('username');
   }
 
-  get password()
-  {
-    return this.loginForm.controls.password;
+  get password() {
+    return this.loginForm.get('password');
   }
 
-  login(){
-    if(this.loginForm.valid){
-      this.loginError="";
+  login(): void {
+    if (this.loginForm.valid) {
+      this.loginError = "";
       this.loginService.login(this.loginForm.value as LoginRequest).subscribe({
         next: (userData) => {
           console.log(userData);
+          // Redirigir a otra página o manejar el éxito
+          this.router.navigateByUrl('/inicio');
+          this.loginForm.reset();
         },
         error: (errorData) => {
           console.error(errorData);
-          this.loginError=errorData;
+          this.loginError = 'Error de autenticación. Por favor, verifica tus credenciales.'; // Mensaje de error más claro
         },
         complete: () => {
           console.info("Login completo");
-          this.router.navigateByUrl('/inicio');
-          this.loginForm.reset();
         }
-      })
-
-    }
-    else{
+      });
+    } else {
       this.loginForm.markAllAsTouched();
       alert("Error al ingresar los datos.");
     }
   }
-
 }
