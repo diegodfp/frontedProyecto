@@ -7,17 +7,32 @@ import { User } from 'src/app/services/auth/user';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit  {
-  userLoginOn:boolean=false;
-  constructor(private loginService:LoginService) { }
+
+export class DashboardComponent implements OnInit {
+  userLoginOn: boolean = false;
+
+  // Agregar arreglo para manejar las tablas y su estado
+  tables = [
+    { name: 'Surveys', showOptions: false },
+    { name: 'Chapters', showOptions: false },
+    { name: 'Questions', showOptions: false },
+    { name: 'SubQuestions', showOptions: false }
+  ];
+
+  constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.loginService.currentUserLoginOn.subscribe({
-      next:(userLoginOn) => {
-        this.userLoginOn=userLoginOn;
+      next: (userLoginOn) => {
+        this.userLoginOn = userLoginOn;
       }
     });
 
   }
+  // Función para alternar el estado de las opciones CRUD
+  toggleOptions(table: any) {
+    table.showOptions = !table.showOptions;
+  }
+
 
 }

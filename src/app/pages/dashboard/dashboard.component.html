@@ -2,38 +2,22 @@
 <p *ngIf="!userLoginOn" class="alert alert-danger">Usuario NO autenticado</p>
 <p *ngIf="userLoginOn" class="alert alert-success">Usuario Autenticado</p>
 
-<div class="card ">
+<div *ngFor="let table of tables" class="card mb-3">
     <div class="card-header">
-        Datos Personales
+        {{ table.name }}
     </div>
-    <div class="card-body m-0">
-       <p> aqui van las encuestas :v</p>
+    <div class="card-body" *ngIf="!table.showOptions">
+        <button class="btn btn-primary btn-lg btn-block" (click)="toggleOptions(table)">
+            Gestionar {{ table.name }}
+        </button>
     </div>
-
-</div>
-<div class="card">
-    <div class="card-header">
-        Perfil Profesional
-    </div>
-    <div class="card-body m-0">
-
-    </div>
-</div>
-<div class="card">
-    <div class="card-header">
-        Datos Académicos
-    </div>
-    <div class="card-body m-0">
-
-    </div>
-
-</div>
-
-<div class="card">
-    <div class="card-header">
-        Experiencia Laboral
-    </div>
-    <div class="card-body m-0">
-
+    <div class="card-body" *ngIf="table.showOptions">
+        <button class="btn btn-success btn-lg btn-block">Crear</button>
+        <button class="btn btn-info btn-lg btn-block">Leer</button>
+        <button class="btn btn-warning btn-lg btn-block">Actualizar</button>
+        <button class="btn btn-danger btn-lg btn-block">Eliminar</button>
+        <button class="btn btn-secondary btn-lg btn-block mt-2" (click)="toggleOptions(table)">
+            Volver
+        </button>
     </div>
 </div>
