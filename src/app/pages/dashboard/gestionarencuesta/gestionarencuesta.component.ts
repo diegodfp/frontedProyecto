@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SurveyService, Survey, PaginatedSurveys } from 'src/app/services/survey/survey.service';
+import { PaginatedSurveys, Survey, SurveyService } from 'src/app/services/survey/survey.service';
 
 @Component({
   selector: 'app-gestionarencuesta',
@@ -14,6 +14,7 @@ export class GestionarencuestaComponent implements OnInit {
   newSurvey: Survey = { name: '', description: '' };
   surveyForm: Survey = { name: '', description: '' };
   isEditing: boolean = false;
+  showButtons: boolean = false;
 
   // Definir las propiedades page y size
   page: number = 0;  // Página inicial
@@ -108,4 +109,9 @@ export class GestionarencuestaComponent implements OnInit {
       );
     }
   }
+
+  // manejo de botones:
+  toggleButtons(): void {
+    this.showButtons = !this.showButtons;
+}
 }
