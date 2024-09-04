@@ -36,19 +36,25 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
+
+  
+
   login(): void {
     if (this.loginForm.valid) {
       this.loginError = "";
       this.loginService.login(this.loginForm.value as LoginRequest).subscribe({
         next: (userData) => {
-          console.log(userData);
-          // Redirigir a otra página o manejar el éxito
-          this.router.navigateByUrl('/inicio');
+          // Redirigir al usuario según su rol
+          if (userData.role === 'ADMIN') {
+            this.router.navigateByUrl('/inicio');
+          } else {
+            this.router.navigateByUrl('/inicio-user');
+          }
           this.loginForm.reset();
         },
         error: (errorData) => {
           console.error(errorData);
-          this.loginError = 'Error de autenticación. Por favor, verifica tus credenciales.'; // Mensaje de error más claro
+          this.loginError = 'Error de autenticación. Por favor, verifica tus credenciales.';
         },
         complete: () => {
           console.info("Login completo");
@@ -59,4 +65,5 @@ export class LoginComponent implements OnInit {
       alert("Error al ingresar los datos.");
     }
   }
+  
 }

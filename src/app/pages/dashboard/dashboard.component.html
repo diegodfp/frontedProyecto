@@ -1,23 +1,21 @@
-
 <p *ngIf="!userLoginOn" class="alert alert-danger">Usuario NO autenticado</p>
 <p *ngIf="userLoginOn" class="alert alert-success">Usuario Autenticado</p>
 
-<div *ngFor="let table of tables" class="card mb-3">
-    <div class="card-header">
-        {{ table.name }}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <img src="../../../assets/imagenes/image1.png" class="card-img-top" alt="Gestionar Encuestas" (click)="navigateTo('gestionar-encuestas')">
+            <div class="card-body">
+                <h5 class="card-title">Gestionar Encuestas</h5>
+            </div>
+        </div>
     </div>
-    <div class="card-body" *ngIf="!table.showOptions">
-        <button class="btn btn-primary btn-lg btn-block" (click)="toggleOptions(table)">
-            Gestionar {{ table.name }}
-        </button>
-    </div>
-    <div class="card-body" *ngIf="table.showOptions">
-        <button class="btn btn-success btn-lg btn-block">Crear</button>
-        <button class="btn btn-info btn-lg btn-block">Leer</button>
-        <button class="btn btn-warning btn-lg btn-block">Actualizar</button>
-        <button class="btn btn-danger btn-lg btn-block">Eliminar</button>
-        <button class="btn btn-secondary btn-lg btn-block mt-2" (click)="toggleOptions(table)">
-            Volver
-        </button>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <img src="../../../assets/imagenes/image2.png" class="card-img-top" alt="Visualizar Encuestas Disponibles" (click)="navigateTo('visualizar-encuestas')">
+            <div class="card-body">
+                <h5 class="card-title">Visualizar Encuestas Disponibles</h5>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,0 +1,19 @@
+/* Asegúrate de que el contenedor del menú tenga un alto suficiente */
+.navbar-collapse {
+    display: flex !important;
+    justify-content: center;
+  }
+  
+  /* Asegúrate de que los elementos de la barra de navegación no estén ocultos */
+  .navbar-nav {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  /* Puedes ajustar el estilo para diferentes tamaños de pantalla si es necesario */
+  @media (max-width: 992px) {
+    .navbar-collapse {
+      display: flex !important;
+    }
+  }
+  

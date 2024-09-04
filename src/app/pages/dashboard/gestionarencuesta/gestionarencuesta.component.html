@@ -1,0 +1,87 @@
+<div class="dashboard-container flex flex-col items-center p-6 space-y-6">
+    <!-- Botón para añadir una nueva encuesta -->
+    <button
+        class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        (click)="openSurveyPopup()">
+        + Añadir Encuesta
+    </button>
+
+    <!-- Contenedor de encuestas -->
+    <div class="survey-container">
+        <div class="survey-card" *ngFor="let survey of surveys; let i = index" (click)="selectSurvey(i)">
+            <h3 class="text-xl font-semibold mb-2">{{ survey.name }}</h3>
+            <p class="text-gray-600">{{ survey.description }}</p>
+        </div>
+    </div>
+
+    <!-- Pop-up para crear encuesta -->
+    <div class="popup-overlay fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center"
+        *ngIf="showPopup">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h2 class="text-2xl font-semibold mb-4">Crear Nueva Encuesta</h2>
+            <form (ngSubmit)="createSurvey()">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700">Nombre de la Encuesta</label>
+                    <input type="text" id="name" [(ngModel)]="newSurvey.name" name="name"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        required />
+                </div>
+                <div class="mb-4">
+                    <label for="description" class="block text-gray-700">Descripción</label>
+                    <textarea id="description" [(ngModel)]="newSurvey.description" name="description"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        required></textarea>
+                </div>
+                <div class="flex justify-between">
+                    <button type="submit"
+                        class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+                        Crear
+                    </button>
+                    <button type="button"
+                        class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 transition"
+                        (click)="closeSurveyPopup()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pop-up para mostrar detalles de la encuesta seleccionada -->
+    <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center" *ngIf="showSurveyPopup">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+            <h2 class="text-2xl font-semibold mb-4">{{ selectedSurvey?.name || '' }}</h2>
+            <form (ngSubmit)="saveSurvey()">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700">Nombre de la Encuesta</label>
+                    <input type="text" id="name" [(ngModel)]="surveyForm.name" name="name"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        required />
+                </div>
+                <div class="mb-4">
+                    <label for="description" class="block text-gray-700">Descripción</label>
+                    <textarea id="description" [(ngModel)]="surveyForm.description" name="description"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        required></textarea>
+                </div>
+
+                <div class="flex gap-2 mb-4">
+                    <button type="submit"
+                        class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        {{ isEditing ? 'Guardar' : 'Actualizar' }}
+                    </button>
+                    <button type="button"
+                        class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+                        (click)="deleteSurvey()">
+                        Eliminar
+                    </button>
+                    <button
+                        class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                        (click)="closeSurveyDetails()">
+                        Cerrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,38 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LoginService } from 'src/app/services/auth/login.service';
-import { User } from 'src/app/services/auth/user';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+export class DashboardComponent {
 
-export class DashboardComponent implements OnInit {
-  userLoginOn: boolean = false;
+  userLoginOn: boolean = true;  // Suponiendo que tienes una lógica para esto
 
-  // Agregar arreglo para manejar las tablas y su estado
-  tables = [
-    { name: 'Surveys', showOptions: false },
-    { name: 'Chapters', showOptions: false },
-    { name: 'Questions', showOptions: false },
-    { name: 'SubQuestions', showOptions: false }
-  ];
+  constructor(private router: Router) {}
 
-  constructor(private loginService: LoginService) { }
-
-  ngOnInit(): void {
-    this.loginService.currentUserLoginOn.subscribe({
-      next: (userLoginOn) => {
-        this.userLoginOn = userLoginOn;
-      }
-    });
-
+  navigateTo(route: string) {
+    if (route === 'gestionar-encuestas') {
+      this.router.navigate(['/gestionar-encuestas']);
+    } else if (route === 'visualizar-encuestas') {
+      this.router.navigate(['/visualizar-encuestas']);
+    }
   }
-  // Función para alternar el estado de las opciones CRUD
-  toggleOptions(table: any) {
-    table.showOptions = !table.showOptions;
-  }
-
-
 }
