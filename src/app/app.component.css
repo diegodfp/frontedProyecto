@@ -1,0 +1,41 @@
+/* Ensure the entire page occupies the full viewport height */
+html, body, app-root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Flexbox layout for the entire app */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Navbar should have a fixed height */
+app-nav {
+  height: 10vh; /* Adjust this based on your needs for desktop */
+}
+
+/* Router outlet to take the remaining height between nav and footer */
+router-outlet {
+  flex: 1; /* This will make the outlet fill the remaining space */
+  overflow-y: auto; /* Add scroll if content overflows */
+}
+
+/* Footer should always stick to the bottom */
+app-footer {
+  height: 10vh; /* Adjust this based on your needs for desktop */
+  background-color: #343a40; /* Dark background for footer */
+  color: white;
+}
+
+@media (max-width: 768px) {
+  app-nav {
+    height: 20vh; /* Increase height for mobile */
+  }
+
+  app-footer {
+    height: 15vh; /* Increase height for mobile */
+  }
+}
