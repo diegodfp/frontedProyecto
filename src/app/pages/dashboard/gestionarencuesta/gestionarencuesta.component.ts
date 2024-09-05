@@ -14,6 +14,11 @@ export class GestionarencuestaComponent implements OnInit {
   newSurvey: Survey = { name: '', description: '' };
   surveyForm: Survey = { name: '', description: '' };
   isEditing: boolean = false;
+  showButtons: boolean = false;
+  // Método para alternar la visibilidad de los botones
+  toggleButtons() {
+    this.showButtons = !this.showButtons;
+}
 
   // Definir las propiedades page y size
   page: number = 0;  // Página inicial
@@ -92,6 +97,11 @@ export class GestionarencuestaComponent implements OnInit {
     } else {
       this.isEditing = true;
     }
+  }
+
+  closePopupOnClickOutside(event: MouseEvent) {
+    // Cierra el popup cuando se hace clic fuera del contenido
+    this.showSurveyPopup = false;
   }
 
   deleteSurvey() {
