@@ -14,6 +14,15 @@ export class GestionarencuestaComponent implements OnInit {
   newSurvey: Survey = { name: '', description: '' };
   surveyForm: Survey = { name: '', description: '' };
   isEditing: boolean = false;
+  showButtons: boolean = false;
+
+  showChapters: boolean = false;
+
+
+  // Método para alternar la visibilidad de los botones
+  toggleButtons() {
+    this.showButtons = !this.showButtons;
+}
 
   // Definir las propiedades page y size
   page: number = 0;  // Página inicial
@@ -25,6 +34,8 @@ export class GestionarencuestaComponent implements OnInit {
   ngOnInit(): void {
     this.loadSurveys();  // Cargar las encuestas al inicializar el componente
   }
+
+  
 
   loadSurveys(): void {
     this.surveyService.getAllSurveys(this.page, this.size).subscribe(
@@ -41,6 +52,8 @@ export class GestionarencuestaComponent implements OnInit {
   openSurveyPopup() {
     this.showPopup = true;
   }
+
+  
 
   closeSurveyPopup() {
     this.showPopup = false;
@@ -94,6 +107,11 @@ export class GestionarencuestaComponent implements OnInit {
     }
   }
 
+  closePopupOnClickOutside(event: MouseEvent) {
+    // Cierra el popup cuando se hace clic fuera del contenido
+    this.showSurveyPopup = false;
+  }
+
   deleteSurvey() {
     if (this.surveyForm.id != null) {
       this.surveyService.deleteSurvey(this.surveyForm.id).subscribe(
@@ -108,4 +126,17 @@ export class GestionarencuestaComponent implements OnInit {
       );
     }
   }
+
+  // Método para alternar la visibilidad de capítulos
+toggleChapters() {
+  this.showChapters = !this.showChapters;
+}
+
+// Método para añadir un capítulo (se podría abrir un nuevo popup)
+addChapter() {
+  // Aquí puedes abrir un popup o redirigir a un formulario para añadir un capítulo
+  console.log('Añadir capítulo');
+}
+
+
 }
